@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>用户注册</title>
+	<meta charset="utf-8">
+</head>
+<body>
+     
+     <tr>
+     	<td>用户名</td>
+     	<td><input type="text" name="username" class="name"></td>
+     </tr>
+     <br>
+     <tr>
+     	<td>密码</td>
+     	<td><input type="text" name="password" class="pass"></td>
+     </tr>
+     <br>
+     <tr>
+     	<td>邮箱</td>
+     	<td><input type="text" name="email" class="email"></td>
+     </tr>
+     <br>
+     <tr>
+      <td colspan="2"><input type="button" class="butt" value="注册"></td>
+     </tr>
+
+</body>
+</html>
+<script src=jquery-1.8.2.min.js></script>
+<script>
+	$(function(){
+		$(".butt").click(function(){
+			var name=$(".name").val();
+           var pass=$(".pass").val();
+           var email=$(".email").val();
+           if (name=="") {
+           	  alert("用户名不能为空");
+           	  return false;
+           }
+           if (pass=="") {
+           	alert("密码不能为空");
+           	return false;
+           }
+           if (email=="") {
+           	alert("邮箱不能为空");
+           	return false;
+           }
+           var zhengze = /^([A-Z0-9a-z]+)@([A-Z0-9a-z]+)\.(com|cn|net)$/;
+           // var ze=/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+           if (!zhengze.test(email)) {
+            alert("邮箱字符不合法");
+           	return false;
+           }
+           $.ajax({
+           	url:"regin.php",
+           	type:"post",
+           	data:{
+           		name:name,
+           		pass:pass,
+           		email:email
+           	},
+           	dataType:"json",
+           	success:function(data){
+               if (data.num==1) {
+               	  alert(data.content);
+               	  location.href="login.html";
+               }else{
+               	  alert(data.content);
+               } 
+           	}
+           })
+
+
+		})
+           
+
+
+	})
+</script>
